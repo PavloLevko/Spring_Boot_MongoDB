@@ -32,7 +32,14 @@ public class DemoApplication {
 					newYork,
 					LocalDateTime.now()
 			);
-			repository.insert(userDoe);
+			repository.findUserByEmail("jondoe@gmail.com").
+					ifPresentOrElse(s ->{
+						System.out.println(s + "Already exists.");
+					}, ()->{
+						System.out.println("Create User: " + userDoe);
+						repository.insert(userDoe);
+					}
+			);
 		};
 	}
 }
