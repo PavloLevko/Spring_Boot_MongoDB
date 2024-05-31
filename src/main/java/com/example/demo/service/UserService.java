@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,5 +19,9 @@ public class UserService {
 
     public void createUser(User user) {
         userRepository.insert(user);
+    }
+
+    public Optional<User> getUserById(String id) {
+      return userRepository.findById(id);
     }
 }
