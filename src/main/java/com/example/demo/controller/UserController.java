@@ -25,8 +25,13 @@ public class UserController {
     }
 
     @GetMapping
-    @RequestMapping("/{id}")
+    @RequestMapping("byId/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
      return userService.getUserById(id);
+    }
+    @GetMapping
+    @RequestMapping("byEmail/{email}")
+    public Optional <User> getUserByEmail(@PathVariable String email){
+        return userService.getUserByEmail(email);
     }
 }
