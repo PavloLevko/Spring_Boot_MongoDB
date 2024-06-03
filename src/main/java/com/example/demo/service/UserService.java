@@ -31,4 +31,8 @@ public class UserService {
     public void deletedUser(String id){
         userRepository.deleteById(id);
     }
+
+    public List<User> getUsersByCity(String city) {
+       return userRepository.findByAddressCity(city);
+    }
 }

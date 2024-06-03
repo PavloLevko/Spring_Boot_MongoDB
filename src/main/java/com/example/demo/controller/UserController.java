@@ -38,4 +38,8 @@ public class UserController {
     public void deletedUser(@PathVariable String id){
         userService.deletedUser(id);
     }
+    @GetMapping("byCity/{city}")
+    public List<User> getUsersByCity(@PathVariable String city){
+       return userService.getUsersByCity(city);
+    }
 }

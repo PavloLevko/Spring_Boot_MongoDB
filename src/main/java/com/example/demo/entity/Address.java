@@ -8,6 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Address {
     private String country;
-    private String City;
+    private String city;
     private String postCode;
 }
