@@ -5,6 +5,7 @@ import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +42,9 @@ public class UserController {
     @GetMapping("byCity/{city}")
     public List<User> getUsersByCity(@PathVariable String city){
        return userService.getUsersByCity(city);
+    }
+    @GetMapping("afterTime/{time}")
+    public List<User> getUsersAfterTime(@PathVariable LocalDateTime time){
+      return userService.getUserAfterInputTime(time);
     }
 }
