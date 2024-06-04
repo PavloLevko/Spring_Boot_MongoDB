@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Gender;
 import com.example.demo.entity.User;
@@ -24,10 +25,11 @@ public class DemoApplication {
 	CommandLineRunner runner(UserRepository repository){
 		return args -> {
 			Address newYork = new Address("USA", "New-York", "234234234");
-			User userDoe = new User("Jon",
+			UserDto userDoe = new UserDto("Jon",
 					"Doe",
 					"jondoe@gmail.com",
-					List.of("books","computer"),
+					null,
+					null,
 					Gender.MALE,
 					newYork,
 					LocalDateTime.now()
