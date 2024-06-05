@@ -25,10 +25,10 @@ public class DemoApplication {
 	CommandLineRunner runner(UserRepository repository){
 		return args -> {
 			Address newYork = new Address("USA", "New-York", "234234234");
-			UserDto userDoe = new UserDto("Jon",
+			UserDto userDoe = new UserDto("adasd",
+					"Jon",
 					"Doe",
 					"jondoe@gmail.com",
-					null,
 					null,
 					Gender.MALE,
 					newYork,
