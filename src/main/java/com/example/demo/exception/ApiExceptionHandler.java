@@ -6,18 +6,32 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ApiExceptionHandler {
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<Object> apiExceptionHandler(ApiException e){
-        HttpStatus bedRequest = HttpStatus.BAD_REQUEST;
-        ApiException apiException = new ApiException(
-                e.getMessage(),
-                bedRequest,
-                ZonedDateTime.now(ZoneId.of("Z")));
-        return new ResponseEntity<>(apiException, bedRequest);
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String,String> handleInvalidArgument(MethodArgumentNotValidException exception) {
+        Map<String,String> errorMap = new HashMap<>();
+        exception.getBindingResult().getFieldErrors().forEach(error -> {
+            errorMap.put(error.getField(), error.getDefaultMessage());
+        });
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public Map<String,String> handleUserNotFoundException(UserNotFoundException e) {
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("message", e.getMessage());
+        return errorMap;
     }
 }

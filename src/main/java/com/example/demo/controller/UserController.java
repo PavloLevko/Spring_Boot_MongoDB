@@ -2,8 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +30,15 @@ public class UserController {
         userService.createUser(user);
     }
 
-    @GetMapping
-    @RequestMapping("byId/{id}")
-    public Optional<UserDto> getUserById(@PathVariable String id) {
-     return userService.getUserById(id);
+    @GetMapping("byId/{id}")
+    public ResponseEntity <Optional<UserDto>> getUserById(@PathVariable String id) {
+        Optional<UserDto> userById = userService.getUserById(id);
+        if (userById.isPresent()){
+            return new ResponseEntity<>(userById, HttpStatus.FOUND);
+        }
+        throw new UserNotFoundException("User not found");
     }
-    @GetMapping
-    @RequestMapping("byEmail/{email}")
+    @GetMapping("byEmail/{email}")
     public Optional <UserDto> getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }

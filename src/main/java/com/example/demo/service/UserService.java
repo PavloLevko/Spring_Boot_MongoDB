@@ -2,11 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
+import com.example.demo.exception.ApiException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +28,8 @@ public class UserService {
     }
 
     public Optional<UserDto> getUserById(String id) {
-      return userRepository.findById(id);
+        return Optional.ofNullable(userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User Not Found with id: " + id)));
     }
 
     public Optional<UserDto> getUserByEmail(String email) {
